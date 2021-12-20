@@ -1,0 +1,49 @@
+common:
+    target:
+        - Cortex-M3
+    core:
+        - Cortex-M3
+    macros:
+        - INTERFACE_STLINKCLONE
+        - USE_HAL_DRIVER
+        - STM32F103xB
+        - DAPLINK_HIC_ID=0x5354434C  # DAPLINK_HIC_ID_STLINKCLONE
+        - __packed=__packed          # Prevent redefinition of __packed with ARMCC
+        - DAPLINK_NO_ASSERT_FILENAMES
+        - OS_CLOCK=72000000
+    includes:
+        - source/hic_hal/stm32/stlinkclone
+        - source/hic_hal/stm32/stlinkclone/cmsis
+        - source/hic_hal/stm32/stlinkclone/STM32F1xx_HAL_Driver
+        - source/hic_hal/stm32/stlinkclone/STM32F1xx_HAL_Driver/Inc
+    sources:
+        hic_hal:
+            - source/hic_hal/stm32/stlinkclone
+            - source/hic_hal/stm32/stlinkclone/cmsis
+            - source/hic_hal/stm32/stlinkclone/STM32F1xx_HAL_Driver/Src
+
+tool_specific:
+    uvision:
+        misc:
+            ld_flags:
+                - --predefine="-I..\..\..\source\hic_hal\stm32\stlinkclone"
+        sources:
+            hic_hal:
+                - source/hic_hal/stm32/stlinkclone/armcc
+    armcc:
+        misc:
+            asm_flags:
+                - --no_unaligned_access
+            c_flags:
+                - --no_unaligned_access
+        sources:
+            hic_hal:
+                - source/hic_hal/stm32/stlinkclone/armcc
+    armclang:
+        sources:
+            hic_hal:
+                - source/hic_hal/stm32/stlinkclone/armcc
+    gcc_arm:
+        sources:
+            hic_hal:
+                - source/hic_hal/stm32/stlinkclone/gcc
