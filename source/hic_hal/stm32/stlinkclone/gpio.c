@@ -133,54 +133,28 @@ void gpio_init(void)
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
     HAL_GPIO_Init(USB_CONNECT_PORT, &GPIO_InitStructure);
 
-    // configure LEDs
-    /*
-    HAL_GPIO_WritePin(RUNNING_LED_PORT, RUNNING_LED_PIN, GPIO_PIN_SET);
-    GPIO_InitStructure.Pin = RUNNING_LED_PIN;
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(RUNNING_LED_PORT, &GPIO_InitStructure);
-    */
+    // configure LED
 
-    HAL_GPIO_WritePin(CONNECTED_LED_PORT, CONNECTED_LED_PIN, GPIO_PIN_SET);
-    GPIO_InitStructure.Pin = CONNECTED_LED_PIN;
+    HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_SET);
+    GPIO_InitStructure.Pin = LED_PIN;
     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(CONNECTED_LED_PORT, &GPIO_InitStructure);
-
-    HAL_GPIO_WritePin(PIN_CDC_LED_PORT, PIN_CDC_LED, GPIO_PIN_SET);
-    GPIO_InitStructure.Pin = PIN_CDC_LED;
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(PIN_CDC_LED_PORT, &GPIO_InitStructure);
-
-    HAL_GPIO_WritePin(PIN_MSC_LED_PORT, PIN_MSC_LED, GPIO_PIN_SET);
-    GPIO_InitStructure.Pin = PIN_MSC_LED;
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(PIN_MSC_LED_PORT, &GPIO_InitStructure);
+    HAL_GPIO_Init(LED_PORT, &GPIO_InitStructure);
 
     // reset button configured as gpio open drain output with a pullup
     HAL_GPIO_WritePin(nRESET_PIN_PORT, nRESET_PIN, GPIO_PIN_SET);
     GPIO_InitStructure.Pin = nRESET_PIN;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_OD;
-    GPIO_InitStructure.Pull = GPIO_PULLUP;
+    GPIO_InitStructure.Pull = GPIO_PULLUP; // on STM32F1 it doesn't work in output mode
     HAL_GPIO_Init(nRESET_PIN_PORT, &GPIO_InitStructure);
 
-    // Turn on power to the board. When the target is unpowered
-    // it holds the reset line low.
-    HAL_GPIO_WritePin(POWER_EN_PIN_PORT, POWER_EN_PIN, GPIO_PIN_RESET);
-    GPIO_InitStructure.Pin = POWER_EN_PIN;
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(POWER_EN_PIN_PORT, &GPIO_InitStructure);
-
     // Setup the 8MHz MCO
-    GPIO_InitStructure.Pin = GPIO_PIN_8;
-    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-    GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
-    output_clock_enable();
+    //GPIO_InitStructure.Pin = GPIO_PIN_8;
+    //GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+    //GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+    //HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
+    //output_clock_enable();
 
     // Let the voltage rails stabilize.  This is especailly important
     // during software resets, since the target's 3.3v rail can take

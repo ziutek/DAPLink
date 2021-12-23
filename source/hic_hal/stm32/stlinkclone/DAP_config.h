@@ -463,9 +463,9 @@ It is recommended to provide the following LEDs for status indication:
 __STATIC_INLINE void LED_CONNECTED_OUT(uint32_t bit)
 {
     if (bit & 1)
-        CONNECTED_LED_PORT->BRR = CONNECTED_LED_PIN; // LED on
+        pin_out_init(LED_PORT, LED_PIN_Bit);
     else
-        CONNECTED_LED_PORT->BSRR = CONNECTED_LED_PIN;// LED off
+        pin_in_init(LED_PORT, LED_PIN_Bit, 0);
 }
 
 /** Debug Unit: Set status Target Running LED.
@@ -539,8 +539,7 @@ __STATIC_INLINE void DAP_SETUP(void)
     pin_out_od_init(nRESET_PIN_PORT, nRESET_PIN_Bit);
     nRESET_PIN_PORT->BSRR = nRESET_PIN;
 
-    pin_out_init(CONNECTED_LED_PORT, CONNECTED_LED_PIN_Bit);
-    CONNECTED_LED_PORT->BSRR = CONNECTED_LED_PIN;
+    pin_in_init(LED_PORT, LED_PIN_Bit, 0);
 }
 
 /** Reset Target Device with custom specific I/O pin or command sequence.

@@ -36,11 +36,6 @@ COMPILER_ASSERT(DAPLINK_HIC_ID == DAPLINK_HIC_ID_STLINKCLONE);
 #define USB_CONNECT_ON()             (USB_CONNECT_PORT->BSRR = USB_CONNECT_PIN)
 #define USB_CONNECT_OFF()            (USB_CONNECT_PORT->BRR  = USB_CONNECT_PIN)
 
-//Connected LED
-#define CONNECTED_LED_PORT           GPIOB
-#define CONNECTED_LED_PIN            GPIO_PIN_6
-#define CONNECTED_LED_PIN_Bit        6
-
 //When bootloader, disable the target port(not used)
 #define POWER_EN_PIN_PORT            GPIOB
 #define POWER_EN_PIN                 GPIO_PIN_15
@@ -48,8 +43,8 @@ COMPILER_ASSERT(DAPLINK_HIC_ID == DAPLINK_HIC_ID_STLINKCLONE);
 
 // nRESET OUT Pin (connector RST)
 #define nRESET_PIN_PORT              GPIOB
-#define nRESET_PIN                   GPIO_PIN_5
-#define nRESET_PIN_Bit               5
+#define nRESET_PIN                   GPIO_PIN_6
+#define nRESET_PIN_Bit               6
 
 #define SWCLK_TCK_PIN_PORT           GPIOB
 #define SWCLK_TCK_PIN                GPIO_PIN_13
@@ -64,22 +59,26 @@ COMPILER_ASSERT(DAPLINK_HIC_ID == DAPLINK_HIC_ID_STLINKCLONE);
 #define SWDIO_IN_PIN_Bit             12
 
 //LEDs
-//USB status LED
-#define RUNNING_LED_PORT             GPIOA
-#define RUNNING_LED_PIN              GPIO_PIN_9
-#define RUNNING_LED_Bit              9
 
-#define PIN_HID_LED_PORT             GPIOA
-#define PIN_HID_LED                  GPIO_PIN_9
-#define PIN_HID_LED_Bit              9
+// We have only one two-color LED.
+#define LED_PORT                     GPIOA
+#define LED_PIN                      GPIO_PIN_9
+#define LED_PIN_Bit                  9
 
-#define PIN_CDC_LED_PORT             GPIOA
-#define PIN_CDC_LED                  GPIO_PIN_9
-#define PIN_CDC_LED_Bit              9
+#define RUNNING_LED_PORT             LED_PORT
+#define RUNNING_LED_PIN              LED_PIN
+#define RUNNING_LED_Bit              LED_PIN_Bit
 
-#define PIN_MSC_LED_PORT             GPIOA
-#define PIN_MSC_LED                  GPIO_PIN_9
-#define PIN_MSC_LED_Bit              9
+#define PIN_HID_LED_PORT             LED_PORT
+#define PIN_HID_LED                  LED_PIN
+#define PIN_HID_LED_Bit              LED_PIN_Bit
 
+#define PIN_CDC_LED_PORT             LED_PORT
+#define PIN_CDC_LED                  LED_PIN
+#define PIN_CDC_LED_Bit              LED_PIN_Bit
+
+#define PIN_MSC_LED_PORT             LED_PORT
+#define PIN_MSC_LED                  LED_PIN
+#define PIN_MSC_LED_Bit              LED_PIN_Bit
 
 #endif
